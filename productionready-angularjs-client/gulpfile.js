@@ -27,7 +27,7 @@ var interceptErrors = function(error) {
   this.emit('end');
 };
 
-
+  // Browserfy for import/export
 gulp.task('browserify', ['views'], function() {
   return browserify('./src/js/app.js')
       .transform(babelify, {presets: ["es2015"]})
@@ -46,6 +46,7 @@ gulp.task('html', function() {
       .pipe(gulp.dest('./build/'));
 });
 
+//gulp-angular templates cache
 gulp.task('views', function() {
   return gulp.src(viewFiles)
       .pipe(templateCache({
@@ -61,13 +62,14 @@ gulp.task('views', function() {
 gulp.task('build', ['html', 'browserify'], function() {
   var html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
-
+  //pipe js to main
   var js = gulp.src("build/main.js")
                .pipe(uglify())
                .pipe(gulp.dest('./dist/'));
 
   return merge(html,js);
 });
+
 
 gulp.task('default', ['html', 'browserify'], function() {
 
@@ -80,6 +82,7 @@ gulp.task('default', ['html', 'browserify'], function() {
     }
   });
 
+  //gulp watch for changes
   gulp.watch("src/index.html", ['html']);
   gulp.watch(viewFiles, ['views']);
   gulp.watch(jsFiles, ['browserify']);
