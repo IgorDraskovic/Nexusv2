@@ -3,12 +3,12 @@
 
     <a class="navbar-brand"
       ui-sref="app.home"
-      ng-bind="::$ctrl.appName | uppercase">
+      ng-bind="::$ctrl.appName | lowercase">
     </a>
 
     <!-- Show this for logged out users -->
-    <ul show-authed="false"
-    class="nav navbar-nav pull-xs-right">
+    <ul class="nav navbar-nav pull-xs-right"
++      show-authed="false">
 
       <li class="nav-item">
         <a class="nav-link"
@@ -18,11 +18,13 @@
         </a>
       </li>
 
+
+
       <li class="nav-item">
         <a class="nav-link"
           ui-sref-active="active"
           ui-sref="app.login">
-          Sing in
+          Sign in
         </a>
       </li>
 
@@ -37,8 +39,8 @@
     </ul>
 
     <!-- Show this for logged in users -->
-    <ul show authed="true"
-    class="nav navbar-nav pull-xs-right">
+    <ul show-authed="true"
+      class="nav navbar-nav pull-xs-right">
 
       <li class="nav-item">
         <a class="nav-link"

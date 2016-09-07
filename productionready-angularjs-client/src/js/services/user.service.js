@@ -1,16 +1,17 @@
 export default class User {
-  constructor(AppConstants, $http) {
+  constructor(JWT, AppConstants, $http, $state) {
     'ngInject';
 
-    //reference to services for our methods to access
+    this._JWT = JWT;
     this._AppConstants = AppConstants;
     this._$http = $http;
-    //current user
-    this.current = null;
+    this._$state = $state;
 
+    // Object to store our user properties
+    this.current = null;
   }
 
-  //try to auth register or login
+  // Try to authenticate by registering or logging in
   attemptAuth(type, credentials) {
     let route = (type === 'login') ? '/login' : '';
     return this._$http({
@@ -20,11 +21,24 @@ export default class User {
         user: credentials
       }
     }).then(
+      // On success...
       (res) => {
+        // Set the JWT token
+        this._JWT.save(res.data.user.token);
+
+        // Store the user's info for easy lookup
         this.current = res.data.user;
 
         return res;
       }
     );
   }
+
+  logout() {
+    this.current = null;
+    this._JWT.destroy();
+    this._$state.go(this._$state.$current, null, { reload: true });
+
+  }
+
 }
