@@ -6,7 +6,7 @@ let settingsModule = angular.module('app.settings', []);
 import SettingsConfig from './settings.config'
 settingsModule.config(SettingsConfig);
 
-//congrollers
+//controllers
 import SettingsCtrl from './settings.controller';
 settingsModule.controller('SettingsCtrl', SettingsCtrl);
 
