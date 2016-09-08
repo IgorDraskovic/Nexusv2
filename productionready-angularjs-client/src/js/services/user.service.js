@@ -35,6 +35,21 @@ export default class User {
     );
   }
 
+  // Update the current user's name, email, password, etc
+  update(fields) {
+    return this._$http({
+      url: this._AppConstants.api + '/user',
+      method: 'PUT',
+      data: { user: fields }
+    }).then(
+      (res) => {
+        this.current = res.data.user;
+        return res.data.user;
+      }
+    );
+  }
+
+
   logout() {
     this.current = null;
     this._JWT.destroy();
@@ -82,5 +97,21 @@ export default class User {
 
     return deferred.promise;
 
+  }
+
+  ensureAuthIs(bool) {
+    let deferred = this._$q.defer();
+
+    this.verifyAuth().then((authValid) => {
+      //if user is not autheticated, send him to homepage
+      if (authValid !== bool) {
+        this._$state.go('app.home');
+        deferred.resolve(false);
+      } else {
+        deferred.resolve(true)
+      }
+    })
+
+    return deferred.promise;
   }
 }
