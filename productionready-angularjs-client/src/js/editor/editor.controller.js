@@ -23,8 +23,8 @@ addTag() {
   }
 }
 
-removeTag() {
-  this.article.tagList = this.article.tagList.filter((slug)) => slug !=tagName);
+removeTag(tagName) {
+  this.article.tagList = this.article.tagList.filter((slug) => slug != tagName);
   }
 
 }
