@@ -27,7 +27,7 @@ var interceptErrors = function(error) {
   this.emit('end');
 };
 
-  // Browserfy for import/export
+  // Browserfy for import/export for ES6
 gulp.task('browserify', ['views'], function() {
   return browserify('./src/js/app.js')
       .transform(babelify, {presets: ["es2015"]})
