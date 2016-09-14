@@ -1,14 +1,21 @@
 class EditorCtrl {
-  constructor() {
+  constructor(Articles, article, $state) {
     'ngInject';
 
-    //article Object
+    this._Articles = Articles;
+    this._$state = $state;
 
-    this.article = {
-      title: '',
-      description: '',
-      body: '',
-      tagList: []
+    //if no article, initialize new article
+    if (!article) {
+    //article Object
+      this.article = {
+        title: '',
+        description: '',
+        body: '',
+        tagList: []
+      }
+    } else {
+      this.article = article;
     }
 
   }
@@ -21,11 +28,28 @@ addTag() {
     this.article.tagList.push(this.tagField);
     this.tagField = '';
   }
+
 }
 
 removeTag(tagName) {
-  this.article.tagList = this.article.tagList.filter((slug) => slug != tagName);
+  this.article.tagList = this.article.tagList.filter((slug) => slug !=
+    tagName);
   }
+
+submit() {
+  this.isSubmitting = true;
+
+  this._Articles.save(this.article).then(
+    (newArticle) => {
+      this._$state.go('app.article', { slug: newArticle.slug });
+    },
+
+    (err) => {
+      this.isSubmitting = false;
+      this.errors = err.data.errors;
+    }
+  )
+}
 
 }
 
