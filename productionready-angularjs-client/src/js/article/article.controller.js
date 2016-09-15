@@ -53,7 +53,6 @@ class ArticleCtrl {
         this.comments.splice(index, 1);
       }
     );
-
   }
 
 }
