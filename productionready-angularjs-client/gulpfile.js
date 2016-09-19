@@ -1,4 +1,5 @@
 var gulp          = require('gulp');
+var deploy        = require('gulp-gh-pages');
 var notify        = require('gulp-notify');
 var source        = require('vinyl-source-stream');
 var browserify    = require('browserify');
@@ -86,4 +87,9 @@ gulp.task('default', ['html', 'browserify'], function() {
   gulp.watch("src/index.html", ['html']);
   gulp.watch(viewFiles, ['views']);
   gulp.watch(jsFiles, ['browserify']);
+});
+
+gulp.task('deploy', function () {
+  return gulp.src("./build/**/*")
+    .pipe(deploy())
 });
